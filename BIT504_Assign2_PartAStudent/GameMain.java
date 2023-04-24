@@ -22,18 +22,11 @@ public class GameMain extends JPanel implements MouseListener{
 	public static final int SYMBOL_SIZE = CELL_SIZE - CELL_PADDING * 2;    
 	public static final int SYMBOL_STROKE_WIDTH = 8;
 	
-	/*declare game object variables*/
-	// the game board 
-	private Board board;
-	 	 
-	//TODO: create the enumeration for the variable below (GameState currentState)
-	//HINT all of the states you require are shown in the code within GameMain
-	private GameState currentState; 
-	
-	// the current player
-	private Player currentPlayer; 
-	// for displaying game status message
-	private JLabel statusBar;       
+	/*declare game object variables*/	
+	private Board board;				// the game board 
+	private GameState currentState; 	//TODO: create the enumeration for the variable below (GameState currentState)
+	private Player currentPlayer; 		// the current player		
+	private JLabel statusBar;     		// for displaying game status message  
 	
 
 	/** Constructor to setup the UI and game components on the panel */
@@ -57,9 +50,10 @@ public class GameMain extends JPanel implements MouseListener{
 		
 		
 		// TODO: Create a new instance of the game "Board"class. HINT check the variables above for the correct name
-
+		board = new Board();
 		
 		//TODO: call the method to initialise the game board
+		 initGame(); // initialize the game board 
 
 	}
 	
