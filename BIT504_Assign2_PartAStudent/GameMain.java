@@ -60,17 +60,19 @@ public class GameMain extends JPanel implements MouseListener{
 	
 	public static void main(String[] args) {
 		    // Run GUI code in Event Dispatch thread for thread safety.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-	         public void run() {
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {		//delays the GUI creation task until the initial thread's task have been completed
+			 
+	         
+			public void run() {
 				//create a main window to contain the panel
 				JFrame frame = new JFrame(TITLE);
 				
 				//TODO: create the new GameMain panel and add it to the frame
-						
+					new GameMain();							//This is required to utilize JPanel	
 				
 				
 				//TODO: set the default close operation of the frame to exit_on_close
-		            
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
 				frame.pack();             
 				frame.setLocationRelativeTo(null);
@@ -92,12 +94,12 @@ public class GameMain extends JPanel implements MouseListener{
 			if (currentPlayer == Player.Cross) {   
 			
 				//TODO: use the status bar to display the message "X"'s Turn
-
+				statusBar.setText("X's Turn");
 				
 			} else {    
 				
 				//TODO: use the status bar to display the message "O"'s Turn
-
+				statusBar.setText("O's Turn");
 				
 			}       
 			} else if (currentState == GameState.Draw) {          
@@ -136,15 +138,20 @@ public class GameMain extends JPanel implements MouseListener{
 			if(board.hasWon(thePlayer, row, col)) {
 				
 				// TODO: check which player has won and update the currentstate to the appropriate gamestate for the winner
-
+				if (thePlayer == Player.Cross) {
+			        currentState = GameState.Cross_won;
+			    } else {
+			        currentState = GameState.Nought_won;
+			    }
 				
 			} else 
 				if (board.isDraw ()) {
 					
 				// TODO: set the currentstate to the draw gamestate
-
+					 currentState = GameState.Draw;
 			}
 			//otherwise no change to current state of playing
+			currentState = GameState.Playing;
 		}
 		
 				
