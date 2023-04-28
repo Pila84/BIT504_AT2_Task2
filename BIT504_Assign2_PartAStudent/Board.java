@@ -1,10 +1,9 @@
 import java.awt.*;
 
 public class Board {
-	// grid line width
-	public static final int GRID_WIDTH = 8;
-	// grid line half width
-	public static final int GRID_WIDHT_HALF = GRID_WIDTH / 2;
+	
+	public static final int GRID_WIDTH = 8;							// grid line width	
+	public static final int GRID_WIDHT_HALF = GRID_WIDTH / 2;		// grid line half width
 	
 	//2D array of ROWS-by-COLS Cell instances
 	Cell [][] cells;
@@ -28,8 +27,19 @@ public class Board {
 		 
 		// TODO: Check whether the game has ended in a draw. 
 		// Hint: Use a nested loop (see the constructor for an example). Check whether any of the cells content in the board grid are Player.Empty. If they are, it is not a draw.
-		// Hint: Return false if it is not a draw, return true if there are no empty positions left
-		   
+		
+		// Check every cell in the board		
+	    for (int row = 0; row < GameMain.ROWS; ++row) {
+	        for (int col = 0; col < GameMain.COLS; ++col) {
+	            // If any cell is empty, the game is not a draw
+	            if (cells[row][col].content == Player.Empty) {
+	                return false;							//// Hint: Return false if it is not a draw
+	            }
+	        }
+	    }
+	    
+	    // return true if there are no empty positions left (all cells are occupied and the game is a draw)
+	    return true;   
 		
 
 		
