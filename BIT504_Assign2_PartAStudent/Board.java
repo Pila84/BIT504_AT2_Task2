@@ -12,11 +12,11 @@ public class Board {
 	public Board() {
 		
 	 //TODO: initialise the cells array using ROWS and COLS constants 
-		cells = new Cell[GameMain.ROWS][GameMain.COLS];
+		cells = new Cell[GameMain.ROWS][GameMain.COLS];		//initializes the cells array
 		
 		for (int row = 0; row < GameMain.ROWS; ++row) {
 			for (int col = 0; col < GameMain.COLS; ++col) {
-				cells[row][col] = new Cell(row, col);
+				cells[row][col] = new Cell(row, col);		//Creates new Cell object with the given row and column indices and adds it to the cells array
 			}
 		}
 	}
@@ -36,12 +36,11 @@ public class Board {
 	                return false;							// Hint: Return false if it is not a draw
 	            }
 	        }
-	    }
-	    
+	    }	    
 	    // return true if there are no empty positions left (all cells are occupied and the game is a draw)
-	    return true;   
-				
+	    return true;   				
 	}
+	
 	
 	/** Return true if the current player "thePlayer" has won after making their move  */
 	public boolean hasWon(Player thePlayer, int playerRow, int playerCol) {
@@ -53,17 +52,14 @@ public class Board {
 		 // Hint: Use the row code above as a starting point, remember that it goes cells[row][column] 
 		 if (cells[0][playerCol].content == thePlayer && cells[1][playerCol].content == thePlayer && cells[2][playerCol].content == thePlayer)
 		        return true;
-		
-		
+				
 		 //Check if the player has 3-in-the-diagonal
 		if( cells[0][0].content == thePlayer && cells[1][1].content == thePlayer && cells[2][2].content == thePlayer)
 			return true;
-		 
-		
+		 		
 		// TODO: Check the diagonal in the other direction
 		if(cells[0][2].content == thePlayer && cells[1][1].content == thePlayer && cells[2][0].content == thePlayer)
 		    return true;
-
 		
 		//no winner, keep playing
 		return false;
@@ -74,13 +70,16 @@ public class Board {
 	 * Cells to paint themselves into the grid
 	 */
 	public void paint(Graphics g) {
-		//draw the grid
-		g.setColor(Color.gray);
+		//paints the game board and its cells
+		
+		g.setColor(Color.gray);			// Sets color of graphics context to gray
+		// Draw the horizontal grid lines
 		for (int row = 1; row < GameMain.ROWS; ++row) {          
 			g.fillRoundRect(0, GameMain.CELL_SIZE * row - GRID_WIDHT_HALF,                
 					GameMain.CANVAS_WIDTH - 1, GRID_WIDTH,                
 					GRID_WIDTH, GRID_WIDTH);       
 			}
+		// Draw the vertical grid lines
 		for (int col = 1; col < GameMain.COLS; ++col) {          
 			g.fillRoundRect(GameMain.CELL_SIZE * col - GRID_WIDHT_HALF, 0,                
 					GRID_WIDTH, GameMain.CANVAS_HEIGHT - 1,                
@@ -90,7 +89,7 @@ public class Board {
 		//Draw the cells
 		for (int row = 0; row < GameMain.ROWS; ++row) {          
 			for (int col = 0; col < GameMain.COLS; ++col) {  
-				cells[row][col].paint(g);
+				cells[row][col].paint(g);		// Call the paint() method of the current cell to paint it on the game board
 			}
 		}
 	}

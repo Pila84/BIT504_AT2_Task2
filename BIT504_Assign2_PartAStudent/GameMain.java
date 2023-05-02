@@ -38,16 +38,16 @@ public class GameMain extends JPanel implements MouseListener{
 	    
 		// Setup the status bar (JLabel) to display status message       
 		statusBar = new JLabel("         ");       
-		statusBar.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 14));       
-		statusBar.setBorder(BorderFactory.createEmptyBorder(2, 5, 4, 5));       
-		statusBar.setOpaque(true);       
-		statusBar.setBackground(Color.LIGHT_GRAY);  
+		statusBar.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 14));   	//set font    
+		statusBar.setBorder(BorderFactory.createEmptyBorder(2, 5, 4, 5));	//add empty borders to the status bar       
+		statusBar.setOpaque(true);       									//make the status bar opaque so background color is visible
+		statusBar.setBackground(Color.LIGHT_GRAY);  						//set the background color
 		
 		//layout of the panel is in border layout
 		setLayout(new BorderLayout());       
-		add(statusBar, BorderLayout.SOUTH);
+		add(statusBar, BorderLayout.SOUTH);									//add bar to the south (bottom) of the panel
 		// account for statusBar height in overall height
-		setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT + 30));
+		setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT + 30));	//set preferred size of panel
 		
 		
 		// TODO: Create a new instance of the game "Board"class. HINT check the variables above for the correct name
@@ -74,9 +74,9 @@ public class GameMain extends JPanel implements MouseListener{
 				//TODO: set the default close operation of the frame to exit_on_close
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-				frame.pack();             
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
+				frame.pack();             				//resizes the frame 
+				frame.setLocationRelativeTo(null);		//centers the frame on the screen
+				frame.setVisible(true);					//makes the frame visible 	
 	         }
 		 });
 	}
@@ -88,7 +88,7 @@ public class GameMain extends JPanel implements MouseListener{
 		//ask the game board to paint itself
 		board.paint(g);
 		
-		//set status bar message
+		//set status bar message (message varies depending on condition)
 		if (currentState == GameState.Playing) {          
 			statusBar.setForeground(Color.BLACK);          
 			if (currentPlayer == Player.Cross) {   
@@ -117,13 +117,16 @@ public class GameMain extends JPanel implements MouseListener{
 	
 	  /** Initialise the game-board contents and the current status of GameState and Player) */
 		public void initGame() {
+			//loop through every row and column of the game board
 			for (int row = 0; row < ROWS; ++row) {          
 				for (int col = 0; col < COLS; ++col) {  
-					// all cells empty
+					//sets the content of the cells to empty
 					board.cells[row][col].content = Player.Empty;           
 				}
 			}
+			//sets currentState of the game to Playing
 			 currentState = GameState.Playing;
+			//sets currentPlayer to Cross
 			 currentPlayer = Player.Cross;
 		}
 		
