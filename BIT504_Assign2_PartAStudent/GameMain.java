@@ -22,64 +22,61 @@ public class GameMain extends JPanel implements MouseListener{
 	public static final int SYMBOL_SIZE = CELL_SIZE - CELL_PADDING * 2;    
 	public static final int SYMBOL_STROKE_WIDTH = 8;
 	
-	/*declare game object variables*/
-	// the game board 
-	private Board board;
-	 	 
-	//TODO: create the enumeration for the variable below (GameState currentState)
-	//HINT all of the states you require are shown in the code within GameMain
-	private GameState currentState; 
-	
-	// the current player
-	private Player currentPlayer; 
-	// for displaying game status message
-	private JLabel statusBar;       
+	/*declare game object variables*/	
+	private Board board;				// the game board 
+	private GameState currentState; 	//TODO: create the enumeration for the variable below (GameState currentState)
+	private Player currentPlayer; 		// the current player		
+	private JLabel statusBar;     		// for displaying game status message  
 	
 
 	/** Constructor to setup the UI and game components on the panel */
 	public GameMain() {   
 		
 		// TODO: This JPanel fires a MouseEvent on MouseClicked so add required event listener to 'this'.          
-	    
+		// add MouseListener to GameMain component
+        addMouseListener(this);						//object that implements the MouseListener interface
 	    
 		// Setup the status bar (JLabel) to display status message       
 		statusBar = new JLabel("         ");       
-		statusBar.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 14));       
-		statusBar.setBorder(BorderFactory.createEmptyBorder(2, 5, 4, 5));       
-		statusBar.setOpaque(true);       
-		statusBar.setBackground(Color.LIGHT_GRAY);  
+		statusBar.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 14));   	//set font    
+		statusBar.setBorder(BorderFactory.createEmptyBorder(2, 5, 4, 5));	//add empty borders to the status bar       
+		statusBar.setOpaque(true);       									//make the status bar opaque so background color is visible
+		statusBar.setBackground(Color.LIGHT_GRAY);  						//set the background color
 		
 		//layout of the panel is in border layout
 		setLayout(new BorderLayout());       
-		add(statusBar, BorderLayout.SOUTH);
+		add(statusBar, BorderLayout.SOUTH);									//add bar to the south (bottom) of the panel
 		// account for statusBar height in overall height
-		setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT + 30));
+		setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT + 30));	//set preferred size of panel
 		
 		
 		// TODO: Create a new instance of the game "Board"class. HINT check the variables above for the correct name
-
+		board = new Board();
 		
 		//TODO: call the method to initialise the game board
+		 initGame(); // initialize the game board 
 
 	}
 	
 	public static void main(String[] args) {
 		    // Run GUI code in Event Dispatch thread for thread safety.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-	         public void run() {
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {		//delays the GUI creation task until the initial thread's task have been completed
+			 
+	         
+			public void run() {
 				//create a main window to contain the panel
 				JFrame frame = new JFrame(TITLE);
 				
 				//TODO: create the new GameMain panel and add it to the frame
-						
+				frame.getContentPane().add(new GameMain());		//adds the GameMain panel to the content pane of the JFrame	
 				
 				
 				//TODO: set the default close operation of the frame to exit_on_close
-		            
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-				frame.pack();             
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
+				frame.pack();             				//resizes the frame 
+				frame.setLocationRelativeTo(null);		//centers the frame on the screen
+				frame.setVisible(true);					//makes the frame visible 	
 	         }
 		 });
 	}
@@ -91,18 +88,18 @@ public class GameMain extends JPanel implements MouseListener{
 		//ask the game board to paint itself
 		board.paint(g);
 		
-		//set status bar message
+		//set status bar message (message varies depending on condition)
 		if (currentState == GameState.Playing) {          
 			statusBar.setForeground(Color.BLACK);          
 			if (currentPlayer == Player.Cross) {   
 			
 				//TODO: use the status bar to display the message "X"'s Turn
-
+				statusBar.setText("X's Turn");
 				
 			} else {    
 				
 				//TODO: use the status bar to display the message "O"'s Turn
-
+				statusBar.setText("O's Turn");
 				
 			}       
 			} else if (currentState == GameState.Draw) {          
@@ -120,13 +117,16 @@ public class GameMain extends JPanel implements MouseListener{
 	
 	  /** Initialise the game-board contents and the current status of GameState and Player) */
 		public void initGame() {
+			//loop through every row and column of the game board
 			for (int row = 0; row < ROWS; ++row) {          
 				for (int col = 0; col < COLS; ++col) {  
-					// all cells empty
+					//sets the content of the cells to empty
 					board.cells[row][col].content = Player.Empty;           
 				}
 			}
+			//sets currentState of the game to Playing
 			 currentState = GameState.Playing;
+			//sets currentPlayer to Cross
 			 currentPlayer = Player.Cross;
 		}
 		
@@ -141,15 +141,20 @@ public class GameMain extends JPanel implements MouseListener{
 			if(board.hasWon(thePlayer, row, col)) {
 				
 				// TODO: check which player has won and update the currentstate to the appropriate gamestate for the winner
-
+				if (thePlayer == Player.Cross) {
+			        currentState = GameState.Cross_won;
+			    } else {
+			        currentState = GameState.Nought_won;
+			    }
 				
-			} else 
-				if (board.isDraw ()) {
-					
+			} else if (board.isDraw ()) {					
 				// TODO: set the currentstate to the draw gamestate
-
+					 currentState = GameState.Draw;
 			}
+			else {
 			//otherwise no change to current state of playing
+			currentState = GameState.Playing;
+		}
 		}
 		
 				
@@ -185,7 +190,7 @@ public class GameMain extends JPanel implements MouseListener{
 		}   
 		
 		//TODO: redraw the graphics on the UI          
-           
+		repaint();				// schedule a call to the paint(Graphics g) method of the JPanel
 	}
 		
 	
